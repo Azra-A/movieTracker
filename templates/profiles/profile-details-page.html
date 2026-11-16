@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}{{ profile.username }} | Movie Tracker{% endblock %}
+
+{% block content %}
+    <section class="page-shell">
+        <div class="profile-card">
+            <div class="profile-avatar">
+                {% if profile.profile_picture %}<img src="{{ profile.profile_picture }}" alt="{{ profile.username }}'s profile picture">{% else %}
+                    <span aria-hidden="true">{{ profile.username|first|upper }}</span>{% endif %}
+            </div>
+            <div class="profile-info">
+                <p class="eyebrow">YOUR MOVIE TRACKER PROFILE</p>
+                <h1>{{ profile.username }}</h1>
+                <p class="muted">{{ profile.region }}</p>
+                {% if profile.bio %}
+                    <p class="profile-bio">{{ profile.bio }}</p>
+                {% endif %}
+                {% if profile.activated_at %}
+                    <p class="since-label">Member since {{ profile.activated_at|date:"F Y" }}</p>
+                {% endif %}
+            </div>
+            <div class="action-row">
+                <a class="button button-secondary" href="{% url 'profiles:edit' %}">Edit profile</a>
+                <a class="button button-danger-ghost" href="{% url 'profiles:delete' %}">Delete</a>
+            </div>
+        </div>
+
+        <div class="section-heading">
+            <div><p class="eyebrow">YOUR FILM JOURNAL</p>
+                <h2>Movies watched &amp; reviews</h2></div>
+            <span class="count-pill">{{ reviews_count }} review{{ reviews_count|pluralize }}</span>
+        </div>
+        {% if reviews %}
+            <div class="review-grid">
+                {% for review in reviews %}
+                    <article class="review-card">
+                        <p class="eyebrow">{{ review.movie.release_year }} <span class="separator">·</span> {{ review.movie.title }}</p>
+                        <h3><a href="{% url 'movies:details' review.movie.pk %}">{{ review.movie.title }}</a></h3>
+                        <p class="rating">★ {{ review.rating }} <span class="muted">/ 5</span></p>
+                        <div class="action-row"><a class="text-link" href="{% url 'reviews:edit' review.pk %}">Edit review</a><a
+                                class="text-link text-link-danger" href="{% url 'reviews:delete' review.pk %}">Delete</a></div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state compact"><span class="empty-icon" aria-hidden="true">✧</span>
+                <h2>Your film journal is waiting</h2>
+                <p class="muted">Add a movie review to keep a record of what you’ve watched.</p><a class="button" href="{% url 'movies:home' %}">Browse
+                    the catalog</a></div>
+        {% endif %}
+    </section>
+{% endblock %}

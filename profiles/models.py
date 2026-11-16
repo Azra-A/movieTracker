@@ -35,8 +35,7 @@ class Profile(models.Model):
         choices=RegionChoices.choices,
     )
     activated_at = models.DateField(
-        null=True,
-        blank=True,
+        auto_now_add=True
     )
 
     def __str__(self):

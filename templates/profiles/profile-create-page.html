@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Create Profile | Movie Tracker{% endblock %}
+
+{% block content %}
+    <section class="form-page">
+        <div class="form-card">
+            <p class="eyebrow">WELCOME TO MOVIE TRACKER</p>
+            <h1>Create your profile</h1>
+            <p class="muted">A little about you helps make your movie journal yours.</p>
+            <form method="post" action="{% url 'profiles:create' %}" class="styled-form">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button class="button" type="submit">Create profile</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

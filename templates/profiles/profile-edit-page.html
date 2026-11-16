@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Edit Profile | Movie Tracker{% endblock %}
+
+{% block content %}
+    <section class="form-page">
+        <div class="form-card">
+            <p class="eyebrow">YOUR ACCOUNT</p>
+            <h1>Edit your profile</h1>
+            <p class="muted">Update your details and keep your movie journal up to date.</p>
+            <form method="post" class="styled-form">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button class="button" type="submit">Save changes</button>
+                    <a class="button button-secondary" href="{% url 'profiles:details' %}">Cancel</a></div>
+            </form>
+        </div>
+    </section>
+{% endblock %}
