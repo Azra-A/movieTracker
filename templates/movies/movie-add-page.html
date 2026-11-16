@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Add Movie | Movie Tracker{% endblock %}
+
+{% block content %}
+    <section class="form-page">
+        <div class="form-card">
+            <p class="eyebrow">GROW YOUR CATALOG</p>
+            <h1>Add a movie</h1>
+            <p class="muted">Save a favorite or a film you’re planning to watch.</p>
+            <form method="post" class="styled-form">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <div class="form-hint">Need another category? <a href="{% url 'movies:genre_create' %}">Add a genre</a>.</div>
+                <div class="form-actions">
+                    <button class="button" type="submit">Add movie</button>
+                    <a class="button button-secondary" href="{% url 'movies:home' %}">Cancel</a></div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

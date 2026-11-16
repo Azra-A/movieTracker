@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load review_filters %}
+
+{% block title %}{{ movie.title }} | Movie Tracker{% endblock %}
+
+{% block content %}
+    <section class="page-shell">
+        <a class="back-link" href="{% url 'movies:home' %}">← Back to catalog</a>
+        <article class="movie-detail-card">
+            <img class="detail-poster" src="{{ movie.poster_url }}" alt="Poster for {{ movie.title }}">
+            <div class="detail-copy">
+                <p class="eyebrow">
+                    {{ movie.release_year }}
+                    {% for genre in movie.genres.all %}
+                        <span class="separator"> · </span>{{ genre.name }}
+                    {% endfor %}
+                </p>
+                <h1>{{ movie.title }}</h1>
+                <p class="detail-description">{{ movie.description }}</p>
+                <div class="action-row">
+                    <a class="button" href="{% url 'reviews:create' movie.pk %}">Write a review</a>
+                    <a class="button button-secondary" href="{% url 'movies:edit' movie.pk %}">Edit movie</a>
+                    <a class="text-link text-link-danger" href="{% url 'movies:delete' movie.pk %}">Delete</a>
+                </div>
+            </div>
+        </article>
+        <div class="section-heading">
+            <div><p class="eyebrow">COMMUNITY NOTES</p>
+                <h2>Reviews</h2></div>
+            <span class="count-pill">{{ movie.reviews.count }} review{{ movie.reviews.count|pluralize }}</span></div>
+        {% if movie.reviews.all %}
+            <div class="review-grid">
+                {% for review in movie.reviews.all %}
+                <article class="review-card"><p class="eyebrow">{{ review.profile.username }}</p>
+                    <h3>{{ review.profile.username }}’s review</h3>
+                    <p class="rating">{{ review.rating|star_rating }} <span class="muted">({{ review.rating }} / 5)</span></p>
+                    <div class="action-row"><a class="text-link" href="{% url 'reviews:details' review.pk %}">View review</a></div>
+                </article>
+            {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state compact"><h2>No reviews yet</h2>
+                <p class="muted">Be the first to share a rating for this movie.</p>
+                <a class="button" href="{% url 'reviews:create' movie.pk %}">Write
+                    the first review</a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

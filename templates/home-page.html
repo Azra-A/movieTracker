@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Movie Catalog | Movie Tracker{% endblock %}
+
+{% block content %}
+    <section class="page-shell">
+        <div class="page-heading">
+            <div><p class="eyebrow">YOUR PERSONAL SCREENING ROOM</p>
+                <h1>Movie Catalog</h1>
+                <p class="muted">Keep track of the films you love, one title at a time.</p></div>
+            <a class="button" href="{% url 'movies:create' %}">Add a movie <span aria-hidden="true">＋</span></a>
+        </div>
+
+        <form method="get" class="catalog-filter" aria-label="Filter movies">
+            <div class="filter-fields">
+                <label class="filter-field">
+                    <span>Genre</span>
+                    <select name="genre">
+                        <option value="">All genres</option>
+                        {% for g in genres %}
+                            <option value="{{ g.name }}" {% if selected_genre == g.name %}selected{% endif %}>{{ g.name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label class="filter-field">
+                    <span>Sort by</span>
+                    <select name="sort">
+                        <option value="">Newest first</option>
+                        <option value="oldest" {% if selected_sort == 'oldest' %}selected{% endif %}>Oldest first</option>
+                        <option value="title" {% if selected_sort == 'title' %}selected{% endif %}>Title (A-Z)</option>
+                    </select>
+                </label>
+            </div>
+            <div class="filter-actions">
+                <button type="submit" class="button filter-submit">Apply filters</button>
+                {% if selected_genre or selected_sort %}
+                    <a class="filter-reset" href="{% url 'movies:home' %}">Clear</a>
+                {% endif %}
+            </div>
+        </form>
+
+        {% if movies %}
+            <div class="movie-grid">
+                {% for movie in movies %}
+                    <article class="movie-card">
+                        <a class="poster-link" href="{% url 'movies:details' movie.pk %}">
+                            <img class="poster" src="{{ movie.poster_url }}" alt="Poster for {{ movie.title }}" loading="lazy">
+                        </a>
+                        <div class="movie-card-body">
+                            <p class="eyebrow">{{ movie.release_year }}</p>
+                            <h2><a href="{% url 'movies:details' movie.pk %}">{{ movie.title }}</a></h2>
+                            <div class="tag-list">{% for genre in movie.genres.all %}<span class="tag">{{ genre.name }}</span>{% empty %}
+                                <span class="muted">No genres added</span>{% endfor %}</div>
+                            <a class="text-link" href="{% url 'movies:details' movie.pk %}">View movie <span aria-hidden="true">→</span></a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+
+            <div class="empty-state"><span class="empty-icon" aria-hidden="true">✦</span>
+                <h2>Your catalog is ready for its first movie</h2>
+                <p class="muted">Add a film and start building your personal watchlist.</p>
+                <a class="button" href="{% url 'movies:create' %}">Add your first movie</a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

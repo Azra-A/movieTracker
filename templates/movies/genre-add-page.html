@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Add Genre | Movie Tracker{% endblock %}
+
+{% block content %}
+    <section class="form-page">
+        <div class="form-card">
+            <p class="eyebrow">CATALOG SETTINGS</p>
+            <h1>Add a genre</h1>
+            <p class="muted">The catalog already includes the common genres. Add another one here and it will appear alongside them.</p>
+            <form method="post" class="styled-form">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button class="button" type="submit">Add genre</button>
+                    <a class="button button-secondary" href="{% url 'movies:create' %}">Cancel</a></div>
+            </form>
+            <div class="genre-manager">
+                <h2>Genres</h2>
+                <ul class="genre-manager-list">
+                    {% for genre in genres %}
+                        <li>
+                            <span>{{ genre.name }}</span>
+                            <form method="post" action="{% url 'movies:genre_delete' genre.pk %}" onsubmit="return confirm('Delete {{ genre.name|escapejs }}? It will also be removed from movies that use it.');">
+                                {% csrf_token %}
+                                <button class="button button-danger-ghost genre-delete" type="submit" aria-label="Delete {{ genre.name }}" title="Delete {{ genre.name }}">×</button>
+                            </form>
+                        </li>
+                    {% empty %}
+                        <li class="muted">No genres yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+{% endblock %}

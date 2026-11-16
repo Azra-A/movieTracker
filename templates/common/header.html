@@ -1,0 +1,11 @@
+<header>
+    <nav>
+        <a class="brand" href="{% url 'movies:home' %}"><span class="brand-mark">MT</span> Movie Tracker</a>
+        <ul class="nav-links">
+            <li><a href="{% url 'movies:home' %}">Catalog</a></li>
+            <li><a href="{% url 'movies:create' %}">Add Movie</a></li>
+            <li><a href="{% url 'movies:genre_create' %}">Add Genre</a></li>
+            <li><a href="{% url 'profiles:create' %}">Profile</a></li>
+        </ul>
+    </nav>
+</header>

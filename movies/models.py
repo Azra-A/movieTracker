@@ -3,11 +3,19 @@ from django.db import models
 
 
 class Genre(models.Model):
+    class GenreChoices(models.TextChoices):
+        ACTION = 'Action', 'Action'
+        COMEDY = 'Comedy', 'Comedy'
+        DRAMA = 'Drama', 'Drama'
+        FANTASY = 'Fantasy', 'Fantasy'
+        HORROR = 'Horror', 'Horror'
+        SCI_FI = 'Sci-Fi', 'Sci-Fi'
+        THRILLER = 'Thriller', 'Thriller'
+        ANIMATION = 'Animation', 'Animation'
+
     name = models.CharField(
         max_length=30,
         unique=True,
-        null=False,
-        blank=False,
     )
 
     def __str__(self):
