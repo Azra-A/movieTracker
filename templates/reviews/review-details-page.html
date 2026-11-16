@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load review_filters%}
+
+{% block title %}{{ review.movie.title }} Review | Movie Tracker{% endblock %}
+
+{% block content %}
+    <section class="form-page">
+        <article class="form-card review-detail">
+            <p class="eyebrow">
+                <a href="{% url 'movies:details' review.movie.pk %}">{{ review.movie.title }}</a> <span
+                    class="separator">·</span> {{ review.movie.release_year }}</p>
+            <h1>{{ review.profile.username }}’s review</h1>
+            <p class="rating">{{ review.rating|star_rating }} <span class="muted">({{ review.rating }} / 5)</span></p>
+            {% if review.review_text %}
+                <p class="profile-bio">{{ review.review_text }}</p>
+            {% endif %}
+            <div class="action-row">
+                <a class="button button-secondary" href="{% url 'reviews:edit' review.pk %}">Edit review</a>
+                <a class="text-link text-link-danger" href="{% url 'reviews:delete' review.pk %}">Delete</a>
+                <a class="text-link" href="{% url 'movies:details' review.movie.pk %}">Back to movie</a></div>
+        </article>
+    </section>
+{% endblock %}

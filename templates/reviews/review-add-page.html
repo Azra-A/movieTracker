@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Review {{ movie.title }} | Movie Tracker{% endblock %}
+
+{% block content %}
+    <section class="form-page">
+        <div class="form-card">
+            <p class="eyebrow">YOUR FILM JOURNAL</p>
+            <h1>Review {{ movie.title }}</h1>
+            <p class="muted">Rate this movie and write a review as {{ profile.username|default:'your profile' }}.</p>
+            <form method="post" class="styled-form">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button class="button" type="submit">Save review</button>
+                    <a class="button button-secondary" href="{% url 'movies:details' movie.pk %}">Cancel</a></div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

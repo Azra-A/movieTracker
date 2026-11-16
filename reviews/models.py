@@ -1,20 +1,18 @@
-from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
 class Review(models.Model):
-    author = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-    )
     rating = models.IntegerField(
         null=False,
         blank=False,
         validators=[
-            MinValueValidator(1),
-            MaxValueValidator(5)
+            MinValueValidator(1.00),
+            MaxValueValidator(5.00)
         ]
+    )
+    review_text = models.TextField(
+        blank=True,
     )
     movie = models.ForeignKey(
         to='movies.Movie',

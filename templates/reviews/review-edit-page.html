@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Edit Review | Movie Tracker{% endblock %}
+
+{% block content %}
+    <section class="form-page">
+        <div class="form-card">
+            <p class="eyebrow">YOUR FILM JOURNAL</p>
+            <h1>Edit your review</h1>
+            <p class="muted">Update your rating and review for {{ object.movie.title }}.</p>
+            <form method="post" class="styled-form">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button class="button" type="submit">Save changes</button>
+                    <a class="button button-secondary" href="{% url 'movies:details' object.movie.pk %}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}
