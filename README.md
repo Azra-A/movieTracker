@@ -62,7 +62,7 @@ No external environment variables (`.env`) or third-party database credentials a
 
 1. Open **`http://127.0.0.1:8000/`** in your web browser.
 2. **Create a Profile:** Navigate to **Profile** in the top navigation bar to set up your viewer profile (required before submitting movie reviews).
-3. **Add Genres:** Click **Add Genre** in the navigation bar to populate film genres from predefined categories.
+3. **Add Genres:** Click **Add Genre** in the navigation bar to create custom film genres.
 4. **Add & Explore Movies:** Use **Add Movie** to add films to the catalog, then filter by genre or sort by release year and title on the home page.
 5. **Write Reviews:** Open any movie's details page and click **Write a review** to submit a rating (1-5 stars) and a comment.
 
@@ -92,7 +92,7 @@ The schema uses **4 models** demonstrating **Many-to-Many** and **Many-to-One (`
 
 | Model | App | Key Fields & Relationships |
 | :--- | :--- | :--- |
-| **`Genre`** | `movies` | `name` (unique choice field) |
+| **`Genre`** | `movies` | `name` (unique) |
 | **`Movie`** | `movies` | `title`, `release_year`, `description`, `poster_url`, `genres` (**Many-to-Many** with `Genre`) |
 | **`Profile`** | `profiles` | `username`, `email`, `region` (choices), `bio`, `profile_picture`, `activated_at` |
 | **`Review`** | `reviews` | `content`, `rating` (`1–5`), `created_at`, `movie` (**ForeignKey**), `profile` (**ForeignKey**) |
