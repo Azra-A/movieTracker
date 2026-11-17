@@ -101,3 +101,4 @@ The schema uses **4 models** demonstrating **Many-to-Many** and **Many-to-One (`
 
 * **Author:** [Azra Ahmedova](https://github.com/Azra-A)
 * **Course:** Python Web - Django Basics @ [SoftUni](https://softuni.bg/)
+
